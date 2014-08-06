@@ -16,6 +16,10 @@
                              $time=date('H:i');// recuperer l'heure que l'internaute a voulu se connecter
                              $params=Etudiant::getParam();
                              
+                        if (count($params)==1) 
+                        {
+                          # code...
+                        
                               
 
                          if ( ( (strtotime($date) >strtotime($params[0]['date_debut']) ) 
@@ -36,8 +40,12 @@
                                   require("vue/login.php");
                               }
                               else {
-                                  echo "<h1>La reservation est indiponible pour le moment</h1>";
+                                  echo "<h1>La reservation est indisponible pour le moment</h1>";
                               }
+
+                          }
+                          else
+                            echo "<h1>La reservation est fermee pour le moment</h1>";
 
 
                             
@@ -55,6 +63,7 @@
                                  $_SESSION['nom']=$user[0]['nom'];
                                  $_SESSION['prenom']=$user[0]['prenom'];
                                  $_SESSION['matricule']=$user[0]['identifiant'];
+                                 
                                  
                                  require_once 'vue/page_reservation.php';                    
                               
