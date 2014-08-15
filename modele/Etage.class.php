@@ -15,18 +15,15 @@
   	        	
     	      }
 
-  	      public function get_etages($nom_pav)
-  	      {
-  	      	 $base=Base::getBDD();
-					   $req=$base->prepare("select Code_Etage ,niveau_Etage from etage Ref_pavillon=?");
-					   $req->execute( array($nom_pav) ) ;
-              
-             $rows=$req->fetchAll();
-
-             return $rows ;
-
+  	      public static function getEtagesPavillon($pavillon)
+             {
+                $bdd=Base::getBDD();
+                $req=$bdd->prepare('SELECT Code_Etage ,niveau_Etage from etage where Ref_pavillon=?');
+                $req->execute(array($pavillon));
+                $rep=$req->fetchAll();
                
-          }
+                return $rep;
+             }
 
 
   }

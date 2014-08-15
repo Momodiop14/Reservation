@@ -18,7 +18,7 @@
          #tableau{width: 70%;
          }
          tr{height:20px;
-            width:120px;}
+            widt:120px;}
         td,th{
              width:70px;
         }

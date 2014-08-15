@@ -1,5 +1,8 @@
 <?php
 						require_once('modele/Chambre.class.php');
+						require_once('modele/Etage.class.php');
+						require_once('modele/Couloir.class.php');
+
 
 				/**
 				* 
@@ -8,16 +11,44 @@
 				{
 					
 					private $chambre;
-					
-					
-					  public function delete_chambre($id)
-					  {
-					  	  $recup_id=explode("_", $id);
-					  	  Chambre::delChambre(intval($recup_id[1]));
-					  }
 
-					   
-					  	    
+										  
+					  
+						    public function getChambres($nom_pav)
+						   {
+						   	 $etages=Etage::getEtagesPavillon($nom_pav);
+
+
+						   	 foreach ($etages as $etagee) 
+						   	 {
+						   	 	 $etage[]=$etagee;
+						   	 	 $couloir[]=Couloir::getCouloirsEtage($etagee['Code_Etage']);
+						   	 
+						   	 }
+
+                             var_dump($couloir);
+                             
+
+						   	 for ($j=0;$j<count($couloir);$j++)
+						   	 {
+						   	 	$k=0;
+						   	 	$couloirs=$couloir[$j];
+						   	 	 foreach ($couloirs as $couloirr ) 
+						   	 	 {
+						   	 	 	
+						   	 	 	$chambre[$j][$k]=Chambre::getChambresCouloir($couloirr['Code_Couloir']);
+						   	 	 	$k++;
+						   	 	 }
+						   	 	 
+
+						   	 }
+
+						     
+						   	  session_start();
+						   	
+						   	require_once 'vue/choix_chambre.php' ;
+						   }
+						  	    
 
 
 					  

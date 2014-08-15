@@ -25,6 +25,17 @@
                               $(this).popover("show");
                            });
 
+                          $('button.libele').mouseenter(function () 
+
+                           {
+                              if ($(this).children('span:eq(0)').attr('class')=='glyphicon glyphicon-plus')
+                                   $(this).attr('data-content','afficher cet etage') ;
+                                  else
+                                     $(this).attr('data-content','masquer cet etage') ;
+
+                              $(this).popover("show");
+                           });
+
                          $('.btn').mouseleave(function () 
 
                            {
@@ -70,9 +81,7 @@
                     
 
 
-                                //var item = $('td:hidden:first');                      
-                                //$(item).show('slow');
-                               // window.setTimeout(afficherItem,100);
+                                
                           });
                                                     
                     });
@@ -104,40 +113,41 @@
               <table class="table table-bordered table-striped ">
               
             <?php
-              for ($i=count($etage)-1;$i>=0;$i--)
-              {
-                 $etage_i=$etage[$i];
+                  for ($i=0;$i<count($etage);$i++)
+                  {
+                     $etage_i=$etage[$i];
+                     if ($i==0) 
+                        $libelle="Rez de chaussee";
+                       else
+                          $libelle=$i."e Etage";  
+                     
 
-                 if (intval($etage_i['niveau_Etage'])==0) 
-                    $libelle="Rez de chaussee";
-                   else
-                      $libelle=$i."e Etage";  
-                 
+                        echo'<tr><td colspan="2">'.$libelle.'</td></tr>';
+                        echo '<tr>';
 
-                    echo'<tr id="ligne'.$i.'" class="title_level"><td  colspan="2"> <button  style="margin-right:10px" class="btn libele" data-toggle="popover" data-placement="top"  data-content="">
+                        $k=0;
+                                  foreach ($couloir[$i] as $couloir_i)
+                                  {
+                                    
+                                    
+                                    echo '<td>';
+                                                  
+                                                          foreach ($chambre[$i,$k] as $chambro) 
+                                                          { 
+                                                            
 
-                                 <span class="glyphicon glyphicon-plus"></span>
-                           </button>'.$libelle.'   </td></tr>';
-                   
-                    echo '<tr class="etages">';
-                              foreach ($couloir[$i] as $couloir_i)
-                              {
-                                
-                                echo '<td>';
-                                            foreach ($chambre[$i] as $chambro) 
-                                            { 
-                                               #var_dump($chambro);
+                                                             echo $chambro['Code_Chambre'];
+                                                          }
+                                                          $k++;
+                                                  
+                                    echo '</td>';
+                                                  
+                                  }  
+                        echo '</tr>';
 
-                                               echo '<button style="margin-bottom:10px" class="btn btn-info">'.$chambro['Code_Chambre'].'</button>'.'  ';
-                                            }
-                                          
-                                echo '</td>';
-                              }  
-                    echo '</tr>';
-
-                   
-              }
-             ?>
+                       
+                  }
+       ?>
            </div>
       
               </table>

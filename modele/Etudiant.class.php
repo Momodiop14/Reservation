@@ -21,12 +21,12 @@
 
 			  }
 
-	 	    public static function seConnecter($pseudo,$pwd)
+	 	    public static function seConnecter($pseudo)
 		 	
 		 	{ 
 		 		  $pdo=Base::getBDD();
-                  $query=$pdo->prepare('select nom,prenom ,identifiant,sexe_etudiant from etudiant where identifiant=? and mot_pass_etudiant=?');
-                  $query->execute(array($pseudo,sha1($pwd)));
+                  $query=$pdo->prepare('select nom , prenom ,formation_etudiant,sexe_etudiant from etudiant where identifiant=? ');
+                  $query->execute(array($pseudo));
                   $rows=$query->fetchAll();
                   return $rows;
 		 		

@@ -9,61 +9,21 @@
 				class Ctr_Authentification 
 				{
 
-					  public function page_authentification()//affichage  du formulaire d'authentification
-					     { 
-                             $date=date("y-m-d");// recuperer la date que l'internaute a voulu se connecter
-                             
-                             $time=date('H:i');// recuperer l'heure que l'internaute a voulu se connecter
-                             $params=Etudiant::getParam();
-                             
-                        if (count($params)==1) 
-                        {
-                          # code...
-                        
-                              
-
-                         if ( ( (strtotime($date) >strtotime($params[0]['date_debut']) ) 
-
-                                    && (strtotime($date) < strtotime($params[0]['date_fin'])) ) 
-
-                              || (strtotime($date)==strtotime($params[0]['date_debut']) 
-
-                                    && strtotime($time)>= strtotime($params[0]['heure_debut']) ) 
-
-                              || (strtotime($date)==strtotime($params[0]['date_fin']) 
-
-                                    && strtotime($time)>= strtotime($params[0]['heure_fin']) ) 
-
-
-                            )
-                              {
-                                  require("vue/login.php");
-                              }
-                              else {
-                                  echo "<h1>La reservation est indisponible pour le moment</h1>";
-                              }
-
-                          }
-                          else
-                            echo "<h1>La reservation est fermee pour le moment</h1>";
-
-
-                            
-						    
-					     }
+					
                      
  
-					  public function connexion($pseudo,$pwd)//affichage  du formulaire d'authentification
+					  public function connexion($pseudo)//affichage  du formulaire d'authentification
 					     {  
-				             $user=Etudiant::seConnecter($pseudo,$pwd); 
+				             $user=Etudiant::seConnecter($pseudo); 
                              if (count($user)==1) 
                              {
                                  session_start();
                                  $_SESSION['compt_visit']=1;
                                  $_SESSION['nom']=$user[0]['nom'];
                                  $_SESSION['prenom']=$user[0]['prenom'];
-                                 $_SESSION['matricule']=$user[0]['identifiant'];
-                                 
+                                 $_SESSION['sexe']=$user[0];
+                                 $_SESSION['identifiant']=$pseudo ;
+                                 $_SESSION['classe']=$user[0]['formation_etudiant'];
                                  
                                  require_once 'vue/page_reservation.php';                    
                               
@@ -72,6 +32,12 @@
                              }                            
                              
                          }
+
+
+                      public function page_authentification()
+                      {
+                          require_once 'vue/login.php';
+                      }
 
 
 

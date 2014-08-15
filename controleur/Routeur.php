@@ -19,59 +19,103 @@
 		    	 $this->ctr_accueil_auth=new Ctr_Authentification();
 
 		    }
+             
+            
 		  
 		  // Traite une requête entrante
 		  public function routerRequete() 
 		  {
-		    
-			      if (isset($_REQUEST['action']) ) 
-			      {
-					     switch ($_REQUEST['action']) 
+		         $ok_period=$this->ctr_reservation->verification();
+		         
 
-					     {
-					         case 'logout':
-					         	{
-					         		session_start();
-					         		session_destroy();
-					         		$this->ctr_accueil_auth->page_authentification();
+		         if($ok_period==true)
+		             {    
+		             	 if (isset($_REQUEST['action']) ) 
+			                  {
+							     
 
-					         	}
-					         	break;
-
-
-					         case 'login':
-					     	                  {
-
-									            if ( (isset($_REQUEST['login'])) && (isset($_REQUEST['password'])) )
-									                 {
-									                   	
-									                   	 $this->ctr_accueil_auth->connexion($_REQUEST['login'],$_REQUEST['password']);
-									                 }
-									             else									             
-                                                 $this->ctr_accueil_auth->page_authentification();
-                                                
-                                              } 
-					      	   break;
-
-					      
+                                  if ( substr($_REQUEST['action'],0,8)=="Pavillon") 
+							          {
+							       	         
+							       	         $pav=implode(" ", explode("_", $_REQUEST['action']));
+							       	         
+							       	         $this->ctr_pav->getChambres($pav);
+							          }
 
 
+							     switch ($_REQUEST['action']) 
 
-					      	 					      	 		
-			                 }
-                }
-		           else  
-		           	    
-		           	     {  // il y a aucun parametre,affichage de l'accueil
-                             
-		           	                         	 
-								        $this->ctr_accueil_auth->page_authentification();
+							      {
+							         case 'logout':
+							         	{
+							         		session_start();
+							         		session_destroy();
+							         		$this->ctr_accueil_auth->page_authentification();
+
+							         	}
+							         	break;
+
+
+							         case 'login':
+							     	                  { 
+							     	                  	 session_start();
+
+											            if  (isset($_SESSION['identifiant']) )  # && (isset($_REQUEST['password'])) )
+											                 {
+											                   	
+											                   	 require_once 'vue/page_reservation.php';
+											                 }
+											             else	
+											                if ( (isset($_REQUEST['login'])) && !isset($_SESSION['identifiant'])) 
+											                      {
+											                      	session_destroy();
+											                      	$this->ctr_accueil_auth->connexion($_REQUEST['login']);#,$_REQUEST['password']);
+											                      } 
+											                 else							             
+		                                                 $this->ctr_accueil_auth->page_authentification();
+		                                                
+		                                              } 
+							      	   break;
+
+
+							      	    case 'choix':
+							     	                  { 
+							     	                  	 session_start();
+
+											            if  (isset($_SESSION['identifiant']) )  # && (isset($_REQUEST['password'])) )
+											                 {
+											                   	
+											                   	 require_once 'vue/page_reservation.php';
+											                 }
+											             else	
+											                if ( (isset($_REQUEST['login'])) && !isset($_SESSION['identifiant'])) 
+											                      {
+											                      	session_destroy();
+											                      	$this->ctr_accueil_auth->connexion($_REQUEST['login']);#,$_REQUEST['password']);
+											                      } 
+											                 else							             
+		                                                 $this->ctr_accueil_auth->page_authentification();
+		                                                
+		                                              } 
+							      	   break;
+
+							       }
+
+
+                              }
+		                  else                 
+		           	          $this->ctr_accueil_auth->page_authentification();
 								 
 
 
 	                                                                                               	 
 		           	                
-                         }
+                         
+
+		             }
+
+		             else
+			          echo "<h1>La reservation est fermee pour le moment</h1>";
                  
                      
          }

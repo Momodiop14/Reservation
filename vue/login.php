@@ -17,10 +17,10 @@
       <input type="text" name="login" id="login" required autocomplete='off'>
     </p>
 
-    <p>
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" required>
-    </p>
+    <!-- <p> -->
+      <!-- <label for="password">Password:</label> -->
+      <!-- <input type="password" name="password" id="password" required> -->
+    <!-- </p> -->
 
     <p class="login-submit">
       <button type="submit" class="login-button">Login</button>
