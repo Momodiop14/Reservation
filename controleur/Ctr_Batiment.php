@@ -18,15 +18,17 @@
 						   {
 						   	 $etages=Etage::getEtagesPavillon($nom_pav);
 
-
+                             
+                             session_start();
+  
 						   	 foreach ($etages as $etagee) 
 						   	 {
 						   	 	 $etage[]=$etagee;
-						   	 	 $couloir[]=Couloir::getCouloirsEtage($etagee['Code_Etage']);
+						   	 	 $couloir[]=Couloir::getCouloirsEtage($etagee['Code_Etage'],$_SESSION['sexe']);
 						   	 
 						   	 }
+                              #var_dump($couloir);
 
-                             var_dump($couloir);
                              
 
 						   	 for ($j=0;$j<count($couloir);$j++)
@@ -42,12 +44,13 @@
 						   	 	 
 
 						   	 }
-
-						     
-						   	  session_start();
+						   	  
 						   	
 						   	require_once 'vue/choix_chambre.php' ;
 						   }
+
+						     
+						   	
 						  	    
 
 

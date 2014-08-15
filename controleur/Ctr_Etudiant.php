@@ -1,4 +1,5 @@
 <?php
+  require_once 'modele/Etudiant.class.php';
 
 /**
 * 
@@ -10,6 +11,22 @@ class Ctr_Etudiant
 	{
 		# code...
 	}
+
+
+	public function getOccupant($chambre)
+	     {
+		    $array_students=Etudiant::getOccupants($chambre);
+		    if (count($array_students)>0) 
+		    {
+		    	foreach ($array_students as $occupant ) 
+		    	{
+		    		echo $occupant['prenom'].' '.$occupant['prenom'].' \n';
+		    	}
+		    }
+		    else
+		    	 echo "Aucune personne n'a fait de reservation pour cette chambre ";
+		    	
+	     }
 }
 
 ?>

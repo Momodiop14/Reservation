@@ -2,12 +2,12 @@
 
 
      <head>
-             <meta name="viewport" content="width=device-width" />
+             <meta name="viewport" content="width=device-width"  charset='utf-8'/>
      	       <link href="Bootstrap/css/bootstrap.min.css" rel="stylesheet">
              <script src="js/jquery.js"></script>
              <script src="Bootstrap/js/bootstrap.min.js"></script>
              
-             <script type="text/javascript">
+              <script type="text/javascript">
                 $(document).ready(function()        
 
                   { 
@@ -15,17 +15,6 @@
                        $('.etages').hide();
 
                         $('button.libele').mouseenter(function () 
-
-                           {
-                              if ($(this).children('span:eq(0)').attr('class')=='glyphicon glyphicon-plus')
-                                   $(this).attr('data-content','afficher cet etage') ;
-                                  else
-                                     $(this).attr('data-content','masquer cet etage') ;
-
-                              $(this).popover("show");
-                           });
-
-                          $('button.libele').mouseenter(function () 
 
                            {
                               if ($(this).children('span:eq(0)').attr('class')=='glyphicon glyphicon-plus')
@@ -76,20 +65,65 @@
                                   {
                                       $('#'+id+' +tr.etages').hide(1000);
                                      
-                                     $('#'+id+' span').attr('class','glyphicon glyphicon-plus');
+                                    $('#'+id+' span').attr('class','glyphicon glyphicon-plus');
                                   }
                     
 
 
+                                //var item = $('td:hidden:first');                      
+                                //$(item).show('slow');
+                               // window.setTimeout(afficherItem,100);
+                          });
+
+
+                         $('tr.etages td button ').mouseenter(function  () 
+
+                           {
+                                 button=$(this);
                                 
+                                 $.ajax({
+                                            url : "index.php?action=get_occupant", // on donne l'URL du fichier de traitement
+                                            dataType: "text",
+                                            type : "POST", // la requête est de type POST
+                                            data : "no_chamb="+ button.text(), //  on envoie nos données
+                                            success: function (data) 
+                                                {
+                                               
+                                                   button.attr('data-content',data);
+                                                   //console.log($(this));
+                                                  button.popover('show',2000);
+                                               }
+                                       });
+                          });
+
+                          $('tr.etages td button ').mouseleave(function  () 
+
+                           {
+                                                                                                                 
+                                   button.popover('hide');
+                            });
+                        
+                          $('tr.etages td button ').click(function  () 
+
+                           {
+                                 button=$(this);
+                                
+                                 $.ajax({
+                                            url : "index.php?action=get_occupant", // on donne l'URL du fichier de traitement
+                                            dataType: "text",
+                                            type : "POST", // la requête est de type POST
+                                            data : "no_chamb="+ button.text(), //  on envoie nos données
+                                            success: function (data) 
+                                                {
+                                               
+                                                   button.attr('data-content',data);
+                                                   //console.log($(this));
+                                                  button.popover('show',2000);
+                                               }
+                                       });
                           });
                                                     
                     });
-
-                            
-                          
-
-                      
 
              </script>
      
@@ -113,60 +147,68 @@
               <table class="table table-bordered table-striped ">
               
             <?php
-                  for ($i=0;$i<count($etage);$i++)
-                  {
-                     $etage_i=$etage[$i];
-                     if ($i==0) 
-                        $libelle="Rez de chaussee";
-                       else
-                          $libelle=$i."e Etage";  
-                     
+        for ($i=0;$i<count($etage);$i++)
+        {
+           $etage_i=$etage[$i];
+           if ($i==0) 
+              $libelle="Rez de chaussee";
+             else
+                $libelle=$i."e Etage";  
+           
 
-                        echo'<tr><td colspan="2">'.$libelle.'</td></tr>';
-                        echo '<tr>';
+                 echo'<tr id="ligne'.$i.'" class="title_level"><td  colspan="2"> 
+                           <button  style="margin-right:10px" class="btn libele" data-toggle="popover" data-placement="top"  data-content="">
+ 
+                               <span class="glyphicon glyphicon-plus"></span>
+ 
+                           </button>'.$libelle.'   </td></tr>';
+             
 
-                        $k=0;
-                                  foreach ($couloir[$i] as $couloir_i)
-                                  {
-                                    
-                                    
-                                    echo '<td>';
+              echo '<tr class="etages">';
+
+              $k=0;
+                        foreach ($couloir[$i] as $couloir_i)
+                        {
+                          
+                          
+                          echo '<td>';
+                                        
+                                                foreach ($chambre[$i][$k] as $chambro) 
+                                                { 
                                                   
-                                                          foreach ($chambre[$i,$k] as $chambro) 
-                                                          { 
-                                                            
 
-                                                             echo $chambro['Code_Chambre'];
-                                                          }
-                                                          $k++;
-                                                  
-                                    echo '</td>';
-                                                  
-                                  }  
-                        echo '</tr>';
+                                                   echo '<button class="btn btn-info" data-content="" title="Occupants de la chambre" data-toggle="popover" data-placement="top" style="margin-bottom:10px">'.$chambro['Code_Chambre'].'</button >'." ";
+                                                }
+                                                $k++;
+                                        
+                          echo '</td>';
+                                        
+                        }  
+              echo '</tr>';
 
-                       
-                  }
+             
+        }
        ?>
-           </div>
+           
       
               </table>
          </div>
 
         
 
-
-
-
-      
-
-
-
-
             
              
 
   </div>
+
+
+        
+           <div class="row">
+
+               <div class="col-lg-offset-6"> <a href="index.php"> <span class="glyphicon glyphicon-arrow-left">  Retour </span> </a> </div>
+              
+           </div>  
+</div>
     
 
 

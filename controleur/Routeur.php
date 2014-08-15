@@ -19,6 +19,19 @@
 		    	 $this->ctr_accueil_auth=new Ctr_Authentification();
 
 		    }
+
+		    public function Redirect()
+		     {     	    	    
+		     	$ok_period=$this->ctr_reservation->verification();
+		     	
+		     	 
+		     	 if ( isset($_SESSION['identifiant']) && $ok_period==true) 
+		     	  
+		     	             require_once 'vue/page_reservation.php';	     	 	
+		     	         else
+		     	 	$this->ctr_accueil_auth->page_authentification();
+
+		     }
              
             
 		  
@@ -50,7 +63,7 @@
 							         	{
 							         		session_start();
 							         		session_destroy();
-							         		$this->ctr_accueil_auth->page_authentification();
+							         		$this->Redirect();
 
 							         	}
 							         	break;
@@ -72,10 +85,23 @@
 											                      	$this->ctr_accueil_auth->connexion($_REQUEST['login']);#,$_REQUEST['password']);
 											                      } 
 											                 else							             
-		                                                 $this->ctr_accueil_auth->page_authentification();
+		                                                         $this->Redirect();
 		                                                
 		                                              } 
 							      	   break;
+
+							      	        case 'get_occupant':
+							     	                  { 
+							     	                  	 session_start();
+
+											            if  (isset($_SESSION['identifiant']) && isset($_REQUEST['no_chamb']) )  # && (isset($_REQUEST['password'])) )
+											                 {
+											                   	
+											                   	 $this->ctr_etud->getOccupant($_REQUEST['no_chamb'] );
+											                 }
+											             		                                                
+		                                              } 
+							      	         break;
 
 
 							      	    case 'choix':
@@ -94,7 +120,7 @@
 											                      	$this->ctr_accueil_auth->connexion($_REQUEST['login']);#,$_REQUEST['password']);
 											                      } 
 											                 else							             
-		                                                 $this->ctr_accueil_auth->page_authentification();
+		                                                           $this->Redirect();
 		                                                
 		                                              } 
 							      	   break;
@@ -103,8 +129,12 @@
 
 
                               }
-		                  else                 
-		           	          $this->ctr_accueil_auth->page_authentification();
+		                  else
+		                      {
+		                      	session_start();
+		                      	 $this->Redirect();
+		                      }                 
+		           	         
 								 
 
 

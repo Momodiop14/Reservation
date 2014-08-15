@@ -26,6 +26,28 @@
             return  $req->fetchAll();
            }
 
+
+     public static function getId($chamb)
+           {
+            $bdd=Base::getBDD();
+            $req=$bdd->prepare('SELECT enregistrement_chambre from chambre WHERE Code_chambre=? ');
+
+            $req->execute(array($chamb));
+           
+
+            $rows=$req->fetchAll();
+
+           
+           
+            if (count($rows)==1) 
+
+                return intval($rows[0]['enregistrement_chambre']);
+            
+           }
+
+
+           
+
             
 
 

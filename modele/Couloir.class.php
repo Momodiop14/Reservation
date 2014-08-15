@@ -24,13 +24,16 @@
           }
 
 
-          public static function getCouloirsEtage($etage)
-               {
+          public static function getCouloirsEtage($etage,$sexe)
+              {
+                #echo $sexe ;
                 $bdd=Base::getBDD();
-                $req=$bdd->prepare('SELECT Code_Couloir from couloir where Ref_Etage= ? ');
+                $req=$bdd->prepare('SELECT Code_Couloir from couloir where Ref_Etage= ?  and genre_couloir= ?');
 
-                $req->execute(array($etage));
+                $req->execute(array($etage,$sexe));
                 $rep=$req->fetchAll();
+
+                #var_dump($rep);
 
                 return $rep;
                }
