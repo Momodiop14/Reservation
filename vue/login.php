@@ -12,19 +12,24 @@
 </head>
 <body>      
   <form method="post" action="index.php?action=login" class="login">
-    <p>
-      <label id='lab_log' for="login">NoMatricule </label>
-      <input type="text" name="login" id="login" required autocomplete='off'>
-    </p>
+    
+    <div class="authentification" style="margin-top:300px">
+         <p >
+            <label id='lab_log'  for="login">NoMatricule </label>
+            <input type="text"  name="login" id="login" required autocomplete='off'>
+          </p>
 
-    <!-- <p> -->
-      <!-- <label for="password">Password:</label> -->
-      <!-- <input type="password" name="password" id="password" required> -->
-    <!-- </p> -->
+          <!-- <p> -->
+            <!-- <label for="password">Password:</label> -->
+            <!-- <input type="password" name="password" id="password" required> -->
+          <!-- </p> -->
 
-    <p class="login-submit">
-      <button type="submit" class="login-button">Login</button>
-    </p>
+          <p class="login-submit">
+            <button type="submit"  class="login-button">Login</button>
+          </p>
+
+    </div>
+    
 
       </form>
 

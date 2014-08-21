@@ -25,11 +25,17 @@
 		     	$ok_period=$this->ctr_reservation->verification();
 		     	
 		     	 
-		     	 if ( isset($_SESSION['identifiant']) && $ok_period==true) 
+		     	 if ( isset($_SESSION['identifiant']) && $ok_period==true && !isset($_SESSION['no_reservation']) ) 
 		     	  
-		     	             require_once 'vue/page_reservation.php';	     	 	
+		     	             require_once 'vue/page_reservation.php';	
+
 		     	         else
-		     	 	$this->ctr_accueil_auth->page_authentification();
+		     	         	 if ( isset($_SESSION['identifiant']) && $ok_period==true && isset($_SESSION['no_reservation']) ) 
+		     	         	      
+		     	         	       require_once 'vue/recap.php';
+
+		     	         	 else
+		     	 	             $this->ctr_accueil_auth->page_authentification();
 
 		     }
              
@@ -63,7 +69,8 @@
 							         	{
 							         		session_start();
 							         		session_destroy();
-							         		$this->Redirect();
+							         		$this->ctr_accueil_auth->page_authentification();
+
 
 							         	}
 							         	break;
@@ -73,16 +80,11 @@
 							     	                  { 
 							     	                  	 session_start();
 
-											            if  (isset($_SESSION['identifiant']) )  # && (isset($_REQUEST['password'])) )
-											                 {
-											                   	
-											                   	 require_once 'vue/page_reservation.php';
-											                 }
-											             else	
-											                if ( (isset($_REQUEST['login'])) && !isset($_SESSION['identifiant'])) 
+											             if ( (isset($_REQUEST['login'])) && !isset($_SESSION['identifiant']) ) 
 											                      {
-											                      	session_destroy();
+											                      	
 											                      	$this->ctr_accueil_auth->connexion($_REQUEST['login']);#,$_REQUEST['password']);
+                                                                    
 											                      } 
 											                 else							             
 		                                                         $this->Redirect();
@@ -108,20 +110,39 @@
 							     	                  { 
 							     	                  	 session_start();
 
-											            if  (isset($_SESSION['identifiant']) )  # && (isset($_REQUEST['password'])) )
+											            if  ( isset($_SESSION['identifiant']) && $ok_period==true && !isset($_SESSION['no_reservation']) )  # && (isset($_REQUEST['password'])) )
 											                 {
 											                   	
 											                   	 require_once 'vue/page_reservation.php';
 											                 }
-											             else	
-											                if ( (isset($_REQUEST['login'])) && !isset($_SESSION['identifiant'])) 
-											                      {
-											                      	session_destroy();
-											                      	$this->ctr_accueil_auth->connexion($_REQUEST['login']);#,$_REQUEST['password']);
-											                      } 
-											                 else							             
-		                                                           $this->Redirect();
+											             else        
+		                                                       $this->Redirect();
 		                                                
+		                                              } 
+							      	   break;
+
+							      	    case 'reserver':
+							     	                  { 
+							     	                  	 session_start();
+
+											             if ( isset($_SESSION['identifiant']) && isset($_REQUEST['chambre']) && $ok_period==true && !isset($_SESSION['no_reservation'])) 
+											              
+											                	$this->ctr_reservation->new_reservation($_SESSION['identifiant'],$_REQUEST['chambre']);
+											               else
+											               	 $this->Redirect();
+		                                              } 
+							      	   break;
+
+
+							      	     case 'del_reservation':
+							     	                  { 
+							     	                  	 session_start();
+
+											             if ( isset($_SESSION['identifiant']) && isset($_REQUEST['numero']) && $ok_period==true && isset($_SESSION['no_reservation'])) 
+											              
+											                	$this->ctr_reservation->delete_reservation(intval($_REQUEST['numero']) );
+											               else
+											               	 $this->Redirect();
 		                                              } 
 							      	   break;
 

@@ -2,7 +2,7 @@
 
 
      <head>
-             <meta name="viewport" content="width=device-width" />
+             <meta name="viewport" content="width=device-width" charset='UTF-8'/>
      	       <link href="Bootstrap/css/bootstrap.css" rel="stylesheet">
              <script src="js/jquery.js"></script>
              <script src="Bootstrap/js/bootstrap.min.js"></script>
@@ -56,7 +56,16 @@
                         <strong>Ouverture de session reussie!!!! Bienvenue </strong> </div>';
                           $_SESSION['compt_visit']++;
                         }
-                       
+
+                         if (isset($message)) 
+
+                             {
+                              echo '<div class=" col-lg-offset-2 col-lg-8 alert alert-warning alert-dismissible" role="alert">
+                              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                              <strong>'.$message.' </strong> </div>';
+
+                           
+                             }       
 
                        
 

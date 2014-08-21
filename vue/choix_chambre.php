@@ -32,7 +32,7 @@
                               $(this).popover("hide");
                            });
 
-                       $(' tr.etages td button').css('display','none');
+                       $(' tr.etages td a').css('display','none');
 
 
                        $('.btn').click(function ()
@@ -49,7 +49,7 @@
 
                                     function afficherItem () 
                                         {
-                                           item=$('#'+id+' +tr.etages td button:hidden:first');
+                                           item=$('#'+id+' +tr.etages td a:hidden:first');
                                            item.show(350);
                                            window.setTimeout(afficherItem,500);
 
@@ -76,34 +76,15 @@
                           });
 
 
-                         $('tr.etages td button ').mouseenter(function  () 
-
-                           {
-                                 button=$(this);
-                                
-                                 $.ajax({
-                                            url : "index.php?action=get_occupant", // on donne l'URL du fichier de traitement
-                                            dataType: "text",
-                                            type : "POST", // la requête est de type POST
-                                            data : "no_chamb="+ button.text(), //  on envoie nos données
-                                            success: function (data) 
-                                                {
-                                               
-                                                   button.attr('data-content',data);
-                                                   //console.log($(this));
-                                                  button.popover('show',2000);
-                                               }
-                                       });
-                          });
-
-                          $('tr.etages td button ').mouseleave(function  () 
+                         
+                          $('tr.etages td a ').mouseleave(function  () 
 
                            {
                                                                                                                  
-                                   button.popover('hide');
+                                   $(this).popover('hide');
                             });
                         
-                          $('tr.etages td button ').click(function  () 
+                         $('tr.etages td a ').mouseenter(function  () 
 
                            {
                                  button=$(this);
@@ -138,11 +119,15 @@
   	
   		<?php   require_once 'header.php'; ?>
 
-
+   
         <div class="row">
 
 
            <div class='col-lg-offset-3 col-lg-6'>
+         
+          
+
+
         
               <table class="table table-bordered table-striped ">
               
@@ -177,7 +162,7 @@
                                                 { 
                                                   
 
-                                                   echo '<button class="btn btn-info" data-content="" title="Occupants de la chambre" data-toggle="popover" data-placement="top" style="margin-bottom:10px">'.$chambro['Code_Chambre'].'</button >'." ";
+                                                   echo '<a href="index.php?action=reserver&chambre='.$chambro['Code_Chambre'].'" name="chambre" value="'.$chambro['Code_Chambre'].'" class="btn btn-info" data-content="" title="Occupants de la chambre" data-toggle="popover" data-placement="top" style="margin-bottom:10px">'.$chambro['Code_Chambre'].'</a>'." ";
                                                 }
                                                 $k++;
                                         
@@ -192,6 +177,7 @@
            
       
               </table>
+       
          </div>
 
         

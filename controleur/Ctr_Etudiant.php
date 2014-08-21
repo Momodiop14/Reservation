@@ -20,7 +20,8 @@ class Ctr_Etudiant
 		    {
 		    	foreach ($array_students as $occupant ) 
 		    	{
-		    		echo $occupant['prenom'].' '.$occupant['prenom'].' \n';
+		    		echo $occupant['prenom'].' '.$occupant['nom'];
+		    		echo "\n";
 		    	}
 		    }
 		    else

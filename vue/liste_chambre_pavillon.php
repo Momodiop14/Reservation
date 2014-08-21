@@ -27,7 +27,13 @@
   <body>
   	<div class="container">
   	
-  		<?php require_once('menu_admin.php'); ?>
+  		<?php require_once('menu_admin.php'); 
+
+            
+
+
+
+      ?>
 
            <div class="modal fade" id="infos">
                 <div class="modal-dialog">
